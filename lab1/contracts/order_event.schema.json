@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OrderEvent",
+  "type": "object",
+  "required": [
+    "id",
+    "timestamp",
+    "correlation_id",
+    "schema_version",
+    "aggregate_id",
+    "type",
+    "payload"
+  ],
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "correlation_id": { "type": "string", "minLength": 1 },
+    "schema_version": { "type": "integer", "minimum": 1 },
+    "aggregate_id": { "type": "string", "minLength": 1 },
+    "type": {
+      "type": "string",
+      "enum": ["order.created", "order.paid", "order.shipped", "order.cancelled"]
+    },
+    "payload": {
+      "type": "object",
+      "required": ["order_id", "customer_id", "amount"],
+      "properties": {
+        "order_id": { "type": "string", "minLength": 1 },
+        "customer_id": { "type": "string", "minLength": 1 },
+        "amount": { "type": "number", "exclusiveMinimum": 0 }
+      }
+    }
+  }
+}
